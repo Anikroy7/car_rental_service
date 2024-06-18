@@ -10,7 +10,7 @@ import catchAsync from "../utils/catchAsync";
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization;
-
+    console.log(token);
     // checking if the token is missing
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
@@ -25,35 +25,13 @@ const auth = (...requiredRoles: TUserRole[]) => {
     const { role, userId, iat } = decoded;
 
     // checking if the user is exist
-    const user = await User.isUserExistsByCustomId(userId);
+    const user = await User.findById(userId);
 
     if (!user) {
       throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");
     }
-    // checking if the user is already deleted
 
-    const isDeleted = user?.isDeleted;
-
-    if (isDeleted) {
-      throw new AppError(httpStatus.FORBIDDEN, "This user is deleted !");
-    }
-
-    // checking if the user is blocked
-    const userStatus = user?.status;
-
-    if (userStatus === "blocked") {
-      throw new AppError(httpStatus.FORBIDDEN, "This user is blocked ! !");
-    }
-
-    if (
-      user.passwordChangedAt &&
-      User.isJWTIssuedBeforePasswordChanged(
-        user.passwordChangedAt,
-        iat as number
-      )
-    ) {
-      throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized !");
-    }
+    console.log(role, requiredRoles, decoded);
 
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(
@@ -62,7 +40,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
       );
     }
 
-    req.user = decoded as JwtPayload;
+    (req as any).user = decoded as JwtPayload;
     next();
   });
 };
