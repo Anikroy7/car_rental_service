@@ -1,15 +1,18 @@
 import httpStatus from "http-status";
 import sendResponse from "../../utils/sendResponse";
-import { Request, Response } from "express";
+import catchAsync from "../../utils/catchAsync";
+import { UserServices } from "./user.service";
 
-const createUser = (req: Request, res: Response) => {
+const createUser = catchAsync(async (req, res) => {
+  const userData = req.body;
+  const result = await UserServices.createUserIntoDB(userData);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Test user created successfully!!",
-    data: "Test result",
+    message: "User registered successfully",
+    data: result,
   });
-};
+});
 
 export const UserControllers = {
   createUser,
