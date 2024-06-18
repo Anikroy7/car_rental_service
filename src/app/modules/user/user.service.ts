@@ -2,12 +2,14 @@ import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 import { TUser } from "./user.interface";
 import { User } from "./user.model";
+import bcrypt from "bcrypt";
+import config from "../../config";
+import { timeStamp } from "console";
 
 const createUserIntoDB = async (payload: TUser) => {
   const newUser = await User.create(payload);
-  console.log("fsadf", newUser);
   if (!newUser) {
-    throw new AppError(httpStatus.BAD_REQUEST, "Failed to create faculty");
+    throw new AppError(httpStatus.BAD_REQUEST, "Failed to create user");
   }
   return newUser;
 };
@@ -18,8 +20,31 @@ const getUserFromDB = async (_id: string) => {
   }
   return user;
 };
+const updateUserIntoDB = async (_id: string, payload: TUser) => {
+  const user = await User.findById(_id);
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "Can't find the user");
+  }
+  if (payload.password) {
+    payload.password = await bcrypt.hash(
+      payload.password,
+      Number(config.bcrypt_salt_rounds)
+    );
+  }
+  const updatedData = {
+    ...user.toObject(),
+    ...payload,
+  };
+  const updatedUser = await User.findByIdAndUpdate(_id, updatedData, {
+    new: true,
+    runValidators: true,
+    select: "-createdAt -updatedAt -__v",
+  });
+  return updatedUser;
+};
 
 export const UserServices = {
   createUserIntoDB,
   getUserFromDB,
+  updateUserIntoDB,
 };

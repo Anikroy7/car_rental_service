@@ -10,6 +10,16 @@ export const createUserValidationSchema = z.object({
     role: z.string(),
   }),
 });
+export const updateUserValidationSchema = z.object({
+  body: z.object({
+    password: z.string().max(20).optional(),
+    name: z.string().optional(),
+    email: z.string().email().optional(),
+    phone: z.string().optional(),
+    address: z.string().optional(),
+    role: z.string().optional(),
+  }),
+});
 
 export const UserValidation = {
   createUserValidationSchema,
