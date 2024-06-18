@@ -4,7 +4,6 @@ import { TUser } from "./user.interface";
 import { User } from "./user.model";
 import bcrypt from "bcrypt";
 import config from "../../config";
-import { timeStamp } from "console";
 
 const createUserIntoDB = async (payload: TUser) => {
   const newUser = await User.create(payload);
