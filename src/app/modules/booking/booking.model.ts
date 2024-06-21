@@ -6,7 +6,6 @@ const bookingSchema = new Schema<TBooking>(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: "User",
     },
     bikeId: {
@@ -20,15 +19,16 @@ const bookingSchema = new Schema<TBooking>(
     },
     returnTime: {
       type: String,
-      required: true,
+      default: null,
     },
     isReturned: {
       type: Boolean,
-      required: true,
+      default: false,
     },
     totalCost: {
       type: Number,
       required: true,
+      default: 0,
     },
   },
   {
@@ -36,4 +36,4 @@ const bookingSchema = new Schema<TBooking>(
   }
 );
 
-export const Bike = model<TBooking>("Bike", bookingSchema);
+export const Booking = model<TBooking>("Booking", bookingSchema);

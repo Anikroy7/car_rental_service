@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { Schema, model } from "mongoose";
-import { TBike } from "./bike.interface";
+import { TCar } from "./car.interface";
 
-const bikeSchema = new Schema<TBike>(
+const carSchema = new Schema<TCar>(
   {
     name: {
       type: String,
@@ -12,30 +12,30 @@ const bikeSchema = new Schema<TBike>(
       type: String,
       required: true,
     },
+    color: {
+      type: String,
+      required: true,
+    },
+    isElectric: {
+      type: Boolean,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["available", "unavailable"],
+      default: "available",
+    },
+    features: {
+      type: [String],
+      required: true,
+    },
     pricePerHour: {
       type: Number,
       required: true,
     },
-    isAvailable: {
+    isDeleted: {
       type: Boolean,
-      required: true,
-      default: true,
-    },
-    cc: {
-      type: Number,
-      required: true,
-    },
-    brand: {
-      type: String,
-      required: true,
-    },
-    model: {
-      type: String,
-      required: true,
-    },
-    year: {
-      type: Number,
-      required: true,
+      required: false,
     },
   },
   {
@@ -43,4 +43,4 @@ const bikeSchema = new Schema<TBike>(
   }
 );
 
-export const Bike = model<TBike>("Bike", bikeSchema);
+export const Car = model<TCar>("Car", carSchema);
