@@ -4,26 +4,24 @@ import { TBooking } from "./booking.interface";
 
 const bookingSchema = new Schema<TBooking>(
   {
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    bikeId: {
+    car: {
       type: Schema.Types.ObjectId,
-      required: true,
-      ref: "Bike",
+      ref: "Car",
     },
     startTime: {
       type: String,
       required: true,
     },
-    returnTime: {
+    endTime: {
       type: String,
       default: null,
     },
-    isReturned: {
-      type: Boolean,
-      default: false,
+    date: {
+      type: String,
     },
     totalCost: {
       type: Number,

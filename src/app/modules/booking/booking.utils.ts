@@ -1,7 +1,10 @@
-export const calculateTotalTime = (startTime: string): number => {
-  const start = new Date(startTime);
-  const currentTime = Date.now();
-  const differenceMs = currentTime - start.getTime();
-  const differenceHours = Math.ceil(differenceMs / (1000 * 60 * 60));
-  return differenceHours;
+export const calculateTotalTime = (
+  startTime: string,
+  endTime: string
+): number => {
+  const startDate = new Date(`2000-01-01T${startTime}:00`);
+  const endDate = new Date(`2000-01-01T${endTime}:00`);
+  const timeDiffMs = endDate.getTime() - startDate.getTime();
+  const timeDiffHours = timeDiffMs / (1000 * 60 * 60);
+  return timeDiffHours;
 };

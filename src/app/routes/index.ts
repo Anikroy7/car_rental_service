@@ -16,11 +16,11 @@ const moduleRoutes = [
     route: UsersRoutes,
   },
   {
-    path: "/car",
+    path: "/cars",
     route: CarsRoutes,
   },
   {
-    path: "/rentals",
+    path: "/bookings",
     route: BookingRoutes,
   },
 ];

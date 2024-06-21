@@ -8,8 +8,17 @@ import {
   createCarValidationSchema,
   updateCarValidationSchema,
 } from "./car.validation";
+import { createBookingReturnValidationSchema } from "../booking/booking.validation";
+import { BookingControllers } from "../booking/booking.controller";
 
 const router = express.Router();
+
+router.put(
+  "/return",
+  auth(USER_ROLE.admin),
+  validateRequest(createBookingReturnValidationSchema),
+  BookingControllers.returnCar
+);
 
 router.get("/:id", auth(USER_ROLE.admin), CarControllers.getSingleCar);
 router.put(
