@@ -8,6 +8,11 @@ import { BookingControllers } from "./booking.controller";
 
 const router = express.Router();
 
+router.get(
+  "/",
+  auth(USER_ROLE.admin, USER_ROLE.user),
+  BookingControllers.getAllBookings
+);
 router.post(
   "/",
   auth(USER_ROLE.admin, USER_ROLE.user),
@@ -17,7 +22,7 @@ router.post(
 router.get(
   "/my-bookings",
   auth(USER_ROLE.admin),
-  BookingControllers.getBookings
+  BookingControllers.getMyBookings
 );
 
 export const BookingRoutes = router;

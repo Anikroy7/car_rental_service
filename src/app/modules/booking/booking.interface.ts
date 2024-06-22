@@ -8,3 +8,7 @@ export type TBooking = {
   endTime: string;
   totalCost: number;
 };
+export type QueryParams = {
+  carId?: string;
+  date?: string;
+};
