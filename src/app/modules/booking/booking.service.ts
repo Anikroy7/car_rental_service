@@ -52,6 +52,7 @@ const getMyBookingsFromDB = async (userId: string) => {
   const bookings = await Booking.find({ user: userId })
     .populate("car")
     .populate("user");
+ 
   return bookings;
 };
 const getAllBookingsFromDB = async (params: QueryParams) => {

@@ -13,7 +13,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     console.log(token);
     // checking if the token is missing
     if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
+      throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route!");
     }
 
     // checking if the given token is valid
@@ -31,12 +31,10 @@ const auth = (...requiredRoles: TUserRole[]) => {
       throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");
     }
 
-    console.log(role, requiredRoles, decoded);
-
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
-        "You are not authorized  hi!"
+        "You have no access to this route!"
       );
     }
 

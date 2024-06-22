@@ -1,41 +1,44 @@
-# **Instruction**
 
-**Step - 1:** Create an `eslint.config.mjs` and copy the code from: 
-<br> 
-[Eslint File](https://github.com/ShafiaChy/Eslint-Config-Setup/blob/main/eslint.config.mjs)
-<br>
+# Car Rental Reservation System
 
-*Delete the files `eslintrc` and `.eslintignore`*
+This is a system where user can book a ride and see all the ride history. This system has implemented authentication system for secure the system. Admin can maintain all the features of this system.
 
-**Step - 2:** Copy/paste the following lines and paste inside `script` in `package.json` code from given in the package.json
+
+
+## Tech Stack
+
+
+**Server:** Node, Express, mongodb, mongoose etc.
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/Anikroy7/bike_rental_service
 ```
 
-    "lint": "npx eslint src --ignore-pattern .ts",
-    "lint:fix": "npx eslint src --fix",
-    "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
-    "prettier:fix": "npx prettier --write src",
+Go to the project directory
 
+```bash
+  cd bike_rental_service
 ```
 
-<br>
+Install dependencies
 
-**Step - 3:** Install the `prettier` package
-
-```
-    npm install --save-dev prettier
+```bash
+  npm install
 ```
 
-<br>
+Start the server
 
-<br>
-
-*If prettier does not work*, follow step 4:
-
-**Step - 4:** Add the code below to the `settings.json` file:
-
-```
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.formatOnSave": true,
+```bash
+  npm run start:dev
 ```
 
-<br>
+
+## Authors
+
+- [@anikroy](https://github.com/Anikroy7)
+
