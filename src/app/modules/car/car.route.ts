@@ -20,7 +20,7 @@ router.put(
   BookingControllers.returnCar
 );
 
-router.get("/:id", auth(USER_ROLE.admin), CarControllers.getSingleCar);
+router.get("/:id", auth(USER_ROLE.admin, USER_ROLE.user), CarControllers.getSingleCar);
 router.put(
   "/:id",
   auth(USER_ROLE.admin),
@@ -36,6 +36,6 @@ router.post(
   validateRequest(createCarValidationSchema),
   CarControllers.createCar
 );
-router.get("/", auth(USER_ROLE.admin), CarControllers.getCars);
+router.get("/", auth(USER_ROLE.admin, USER_ROLE.user), CarControllers.getCars);
 
 export const CarsRoutes = router;

@@ -24,7 +24,14 @@ const returnCarUpdateIntoDB = async (bookingId: string, endTime: string) => {
     throw new AppError(httpStatus.BAD_REQUEST, "Can't find any booking!");
   }
   const totalHours = calculateTotalTime(userBooking.startTime, endTime);
-  const totalCost = userBooking?.car?.pricePerHour * totalHours;
+  const car = await Car.findById(userBooking.car._id).select("pricePerHour");
+  if (!car || !car.pricePerHour == undefined) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "Something went wrong to prizing!!"
+    );
+  }
+  const totalCost = car?.pricePerHour * totalHours;
   const updateDatedData = await Booking.findByIdAndUpdate(
     bookingId,
     {
@@ -50,7 +57,6 @@ const getMyBookingsFromDB = async (userId: string) => {
 const getAllBookingsFromDB = async (params: QueryParams) => {
   const { carId, date } = params;
   let query = Booking.find().populate("car").populate("user");
-  console.log(carId, date);
   if (carId) {
     query = query.where({ "car._id": carId });
   }
