@@ -12,7 +12,7 @@ const createCarIntoDB = async (payload: TCar) => {
 };
 const getCarsFromDB = async () => {
   const cars = await Car.find({ isDeleted: { $ne: true } }).select(
-    "-createdAt -updatedAt -__v"
+    "-createdAt -updatedAt -__v",
   );
   return cars;
 };
@@ -50,7 +50,6 @@ const deleteCarFromDB = async (_id: string) => {
   const car = await Car.findById(_id);
   if (!car) {
     throw new AppError(httpStatus.BAD_REQUEST, "This car is not exits!!");
-
   }
   if (car?.isDeleted) {
     throw new AppError(httpStatus.BAD_REQUEST, "This car is already deleted!!");

@@ -13,7 +13,7 @@ router.put(
   "/",
   auth(USER_ROLE.admin, USER_ROLE.user),
   validateRequest(updateUserValidationSchema),
-  UserControllers.updateUser
+  UserControllers.updateUser,
 );
 
 export const UsersRoutes = router;

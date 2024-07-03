@@ -10,19 +10,18 @@ import catchAsync from "../utils/catchAsync";
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(" ")[1];
-    console.log(token);
     // checking if the token is missing
     if (!token) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
-        "You have no access to this route!"
+        "You have no access to this route!",
       );
     }
 
     // checking if the given token is valid
     const decoded = jwt.verify(
       token,
-      config.jwt_access_secret as string
+      config.jwt_access_secret as string,
     ) as JwtPayload;
 
     const { role, userId } = decoded;
@@ -37,7 +36,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
-        "You have no access to this route!"
+        "You have no access to this route!",
       );
     }
 

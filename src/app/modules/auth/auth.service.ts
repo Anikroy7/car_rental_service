@@ -8,7 +8,7 @@ import { createToken } from "./auth.utils";
 const loginUser = async (payload: TLoginUser) => {
   //if the user is exist
   const user = await User.findOne({ email: payload.email }).select(
-    "email password role"
+    "email password role",
   );
 
   if (!user) {
@@ -31,7 +31,7 @@ const loginUser = async (payload: TLoginUser) => {
   const accessToken = createToken(
     jwtPayload,
     config.jwt_access_secret as string,
-    config.jwt_access_expires_in as string
+    config.jwt_access_expires_in as string,
   );
 
   return {

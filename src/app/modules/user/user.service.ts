@@ -27,7 +27,7 @@ const updateUserIntoDB = async (_id: string, payload: TUser) => {
   if (payload.password) {
     payload.password = await bcrypt.hash(
       payload.password,
-      Number(config.bcrypt_salt_rounds)
+      Number(config.bcrypt_salt_rounds),
     );
   }
   const updatedData = {

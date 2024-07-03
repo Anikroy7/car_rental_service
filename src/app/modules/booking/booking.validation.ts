@@ -7,7 +7,7 @@ const timeStringSchema = z.string().refine(
   },
   {
     message: 'Invalid time format , expected "HH:MM" in 24 hours format',
-  }
+  },
 );
 
 export const createBookingValidationSchema = z.object({

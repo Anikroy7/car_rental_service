@@ -4,9 +4,7 @@ import { Booking } from "./booking.model";
 import { QueryParams, TBooking } from "./booking.interface";
 import { calculateTotalTime } from "./booking.utils";
 import { Car } from "../car/car.model";
-import mongoose from "mongoose"
-const ObjectId = require('mongoose').Types.ObjectId;
-
+import mongoose from "mongoose";
 
 const createBookingIntoDB = async (payload: TBooking) => {
   const carInfo = await Car.findById(payload.car);
@@ -35,10 +33,10 @@ const returnCarUpdateIntoDB = async (bookingId: string, endTime: string) => {
   }
   const totalHours = calculateTotalTime(userBooking.startTime, endTime);
   const car = await Car.findById(userBooking.car._id).select("pricePerHour");
-  if (!car || !car.pricePerHour == undefined) {
+  if (!car || !car.pricePerHour === undefined) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
-      "Something went wrong to prizing!!"
+      "Something went wrong to prizing!!",
     );
   }
   const totalCost = car?.pricePerHour * totalHours;
@@ -48,7 +46,7 @@ const returnCarUpdateIntoDB = async (bookingId: string, endTime: string) => {
       endTime,
       totalCost,
     },
-    { new: true }
+    { new: true },
   )
     .populate("user")
     .populate("car");
@@ -69,14 +67,15 @@ const getAllBookingsFromDB = async (params: QueryParams) => {
   const { carId, date } = params;
   let query = Booking.find({});
   if (carId) {
-    query = query.where({ "car":new ObjectId(carId) });
+    //const ObjectId = require('mongoose').Types.ObjectId;
+
+    query = query.where({ car: new mongoose.Types.ObjectId(carId) });
   }
   if (date) {
-
-    query = query.where({"date": date});
+    query = query.where({ date: date });
   }
 
-  const bookings = await query.populate('car').populate('user').exec();
+  const bookings = await query.populate("car").populate("user").exec();
   return bookings;
 };
 

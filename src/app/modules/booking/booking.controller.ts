@@ -23,7 +23,7 @@ const returnCar = catchAsync(async (req, res) => {
 
   const result = await BookingServices.returnCarUpdateIntoDB(
     bookingId,
-    endTime
+    endTime,
   );
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -43,7 +43,6 @@ const getMyBookings = catchAsync(async (req, res) => {
   });
 });
 const getAllBookings = catchAsync(async (req, res) => {
-
   const result = await BookingServices.getAllBookingsFromDB(req.query);
   sendResponse(res, {
     statusCode: httpStatus.OK,

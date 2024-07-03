@@ -17,18 +17,18 @@ router.put(
   "/return",
   auth(USER_ROLE.admin),
   validateRequest(createBookingReturnValidationSchema),
-  BookingControllers.returnCar
+  BookingControllers.returnCar,
 );
 
 router.get(
   "/:id",
-  /* auth(USER_ROLE.admin, USER_ROLE.user), */ CarControllers.getSingleCar
+  /* auth(USER_ROLE.admin, USER_ROLE.user), */ CarControllers.getSingleCar,
 );
 router.put(
   "/:id",
   auth(USER_ROLE.admin),
   validateRequest(updateCarValidationSchema),
-  CarControllers.updateCar
+  CarControllers.updateCar,
 );
 
 router.delete("/:id", auth(USER_ROLE.admin), CarControllers.deleteCar);
@@ -37,11 +37,11 @@ router.post(
   "/",
   auth(USER_ROLE.admin),
   validateRequest(createCarValidationSchema),
-  CarControllers.createCar
+  CarControllers.createCar,
 );
 router.get(
   "/",
-  /* auth(USER_ROLE.admin, USER_ROLE.user), */ CarControllers.getCars
+  /* auth(USER_ROLE.admin, USER_ROLE.user), */ CarControllers.getCars,
 );
 
 export const CarsRoutes = router;

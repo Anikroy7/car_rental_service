@@ -13,7 +13,7 @@ export type TUser = {
 export interface UserModel extends Model<TUser> {
   isPasswordMatched(
     plainTextPassword: string,
-    hashedPassword: string
+    hashedPassword: string,
   ): Promise<boolean>;
 }
 

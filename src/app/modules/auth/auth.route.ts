@@ -11,12 +11,12 @@ const router = express.Router();
 router.post(
   "/signup",
   validateRequest(createUserValidationSchema),
-  UserControllers.createUser
+  UserControllers.createUser,
 );
 router.post(
   "/signin",
   validateRequest(AuthValidation.loginValidationSchema),
-  AuthControllers.loginUser
+  AuthControllers.loginUser,
 );
 
 export const AuthRoutes = router;
