@@ -11,18 +11,27 @@ const createCarIntoDB = async (payload: TCar) => {
   return newCar;
 };
 const getCarsFromDB = async () => {
-  const cars = await Car.find({}).select("-createdAt -updatedAt -__v");
+  const cars = await Car.find({ isDeleted: { $ne: true } }).select(
+    "-createdAt -updatedAt -__v"
+  );
   return cars;
 };
 const getSingleCarFromDB = async (_id: string) => {
-  const cars = await Car.findById(_id).select("-createdAt -updatedAt -__v");
-  return cars;
+  const car = await Car.findById(_id).select("-createdAt -updatedAt -__v");
+  if (car?.isDeleted) {
+    throw new AppError(httpStatus.BAD_REQUEST, "This car is already deleted");
+  }
+  return car;
 };
 
 const updateCarIntoDB = async (_id: string, payload: TCar) => {
   const car = await Car.findById(_id);
+
   if (!car) {
     throw new AppError(httpStatus.NOT_FOUND, "Can't find the car");
+  }
+  if (car.isDeleted) {
+    throw new AppError(httpStatus.NOT_FOUND, "This car is already deleted!!!");
   }
 
   const updatedData = {
@@ -38,6 +47,14 @@ const updateCarIntoDB = async (_id: string, payload: TCar) => {
 };
 
 const deleteCarFromDB = async (_id: string) => {
+  const car = await Car.findById(_id);
+  if (!car) {
+    throw new AppError(httpStatus.BAD_REQUEST, "This car is not exits!!");
+
+  }
+  if (car?.isDeleted) {
+    throw new AppError(httpStatus.BAD_REQUEST, "This car is already deleted!!");
+  }
   const result = await Car.findByIdAndUpdate(_id, { isDeleted: true });
   return result;
 };

@@ -36,6 +36,7 @@ const carSchema = new Schema<TCar>(
     isDeleted: {
       type: Boolean,
       required: false,
+      default: false,
     },
   },
   {

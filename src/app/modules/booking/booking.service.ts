@@ -4,8 +4,18 @@ import { Booking } from "./booking.model";
 import { QueryParams, TBooking } from "./booking.interface";
 import { calculateTotalTime } from "./booking.utils";
 import { Car } from "../car/car.model";
+import mongoose from "mongoose"
+const ObjectId = require('mongoose').Types.ObjectId;
+
 
 const createBookingIntoDB = async (payload: TBooking) => {
+  const carInfo = await Car.findById(payload.car);
+  if (!carInfo) {
+    throw new AppError(httpStatus.BAD_REQUEST, "This car is not exists!!");
+  }
+  if (carInfo.isDeleted) {
+    throw new AppError(httpStatus.BAD_REQUEST, "This car is deleted!!");
+  }
   await Car.findByIdAndUpdate(payload.car, { status: "unavailable" });
   const newBooking = (
     await (await Booking.create(payload)).populate("user")
@@ -52,22 +62,21 @@ const getMyBookingsFromDB = async (userId: string) => {
   const bookings = await Booking.find({ user: userId })
     .populate("car")
     .populate("user");
- 
+
   return bookings;
 };
 const getAllBookingsFromDB = async (params: QueryParams) => {
   const { carId, date } = params;
-  let query = Booking.find().populate("car").populate("user");
+  let query = Booking.find({});
   if (carId) {
-    query = query.where({ "car._id": carId });
+    query = query.where({ "car":new ObjectId(carId) });
   }
   if (date) {
-    const startDate = new Date(date);
-    const endDate = new Date(date);
-    endDate.setDate(endDate.getDate() + 1);
-    query = query.where("date").gte(startDate.getTime()).lt(endDate.getTime());
+
+    query = query.where({"date": date});
   }
-  const bookings = await query.exec();
+
+  const bookings = await query.populate('car').populate('user').exec();
   return bookings;
 };
 
