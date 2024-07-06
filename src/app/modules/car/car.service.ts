@@ -54,7 +54,7 @@ const deleteCarFromDB = async (_id: string) => {
   if (car?.isDeleted) {
     throw new AppError(httpStatus.BAD_REQUEST, "This car is already deleted!!");
   }
-  const result = await Car.findByIdAndUpdate(_id, { isDeleted: true });
+  const result = await Car.findByIdAndUpdate(_id, { isDeleted: true }, { new: true });
   return result;
 };
 export const CarServices = {
