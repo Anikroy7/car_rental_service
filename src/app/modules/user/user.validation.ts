@@ -8,6 +8,8 @@ export const createUserValidationSchema = z.object({
     phone: z.string(),
     address: z.string(),
     role: z.string(),
+    status: z.enum(['blocked', 'active']).default('active'),
+    isDeleted:z.boolean().default(false)
   }),
 });
 export const updateUserValidationSchema = z.object({
@@ -18,9 +20,12 @@ export const updateUserValidationSchema = z.object({
     phone: z.string().optional(),
     address: z.string().optional(),
     role: z.string().optional(),
+    status: z.enum(['blocked', 'active']).optional(),
+    isDeleted: z.boolean().default(false).optional(),
   }),
 });
 
 export const UserValidation = {
   createUserValidationSchema,
+  updateUserValidationSchema
 };

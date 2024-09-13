@@ -42,8 +42,15 @@ const updateUserIntoDB = async (_id: string, payload: TUser) => {
   return updatedUser;
 };
 
+const getAllUsersFromDB = async () => {
+  const users = await User.find({ isDeleted: { $ne: true } }).select(
+    "-createdAt -updatedAt -__v",
+  );
+  return users;
+};
 export const UserServices = {
   createUserIntoDB,
   getUserFromDB,
   updateUserIntoDB,
+  getAllUsersFromDB
 };

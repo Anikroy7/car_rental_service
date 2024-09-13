@@ -35,7 +35,7 @@ router.delete("/:id", auth(USER_ROLE.admin), CarControllers.deleteCar);
 
 router.post(
   "/",
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE. admin),
   validateRequest(createCarValidationSchema),
   CarControllers.createCar,
 );

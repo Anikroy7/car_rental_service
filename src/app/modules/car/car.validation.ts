@@ -8,7 +8,7 @@ export const createCarValidationSchema = z.object({
     isElectric: z.boolean(),
     status: z.enum(["available", "unavailable"]).optional(),
     features: z.array(z.string()),
-    pricePerHour: z.number(),
+    pricePerHour: z.number(),         
     isDeleted: z.boolean().optional(),
   }),
 });

@@ -36,8 +36,20 @@ const updateUser = catchAsync(async (req, res) => {
   });
 });
 
+const getAllUsers = catchAsync(async (req, res) => {
+
+  const result = await UserServices.getAllUsersFromDB();
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User profile retrieved successfully",
+    data: result,
+  });
+});
+
 export const UserControllers = {
   createUser,
   getUser,
   updateUser,
+  getAllUsers
 };

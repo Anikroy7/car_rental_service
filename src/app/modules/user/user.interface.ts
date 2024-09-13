@@ -8,6 +8,8 @@ export type TUser = {
   phone: string;
   address: string;
   role: "user" | "admin";
+  status: 'active' | 'blocked',
+  isDeleted: boolean
 };
 
 export interface UserModel extends Model<TUser> {

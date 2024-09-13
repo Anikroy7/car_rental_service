@@ -28,6 +28,19 @@ const userSchema = new Schema<TUser, UserModel>(
       type: String,
       enum: ["user", "admin"],
     },
+    status: {
+      type: String,
+      enum: ["active", "blocked"],
+      default: 'active'
+    },
+    address: {
+      type: String,
+      required: true
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true,

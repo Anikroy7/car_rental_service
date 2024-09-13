@@ -8,6 +8,7 @@ import { sendEmail } from "../../utils/sendEmail";
 import { JwtPayload } from "jsonwebtoken";
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
+import { lchown } from "fs";
 
 
 const loginUser = async (payload: TLoginUser) => {
@@ -92,8 +93,8 @@ const resetPasswod = async (payload: { email: string, newPassword: string }, tok
       "Something invalid happen",
     );
   }
-
-  //if the user is exist
+  console.log('this si ', userId,email, payload.email)
+  // //if the user is exist
   const user = await User.findOne({ email: payload.email }).select(
     "email password role"
   );

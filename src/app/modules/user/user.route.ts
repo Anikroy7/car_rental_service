@@ -7,13 +7,17 @@ import { updateUserValidationSchema } from "./user.validation";
 
 const router = express.Router();
 
-router.get("/", auth(USER_ROLE.admin, USER_ROLE.user), UserControllers.getUser);
+router.get('/', auth(USER_ROLE.admin), UserControllers.getAllUsers)
+
+router.get("/me", auth(USER_ROLE.admin, USER_ROLE.user), UserControllers.getUser);
+
 
 router.put(
-  "/",
+  "/me",
   auth(USER_ROLE.admin, USER_ROLE.user),
   validateRequest(updateUserValidationSchema),
   UserControllers.updateUser,
 );
+
 
 export const UsersRoutes = router;
