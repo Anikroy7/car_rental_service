@@ -29,6 +29,10 @@ const carSchema = new Schema<TCar>(
       type: [String],
       required: true,
     },
+    images: {
+      type: [String],
+      required: true,
+    },
     pricePerHour: {
       type: Number,
       required: true,

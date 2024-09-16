@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 
 import auth from "../../middlewares/auth";
 import { USER_ROLE } from "../user/user.constant";
@@ -10,6 +10,7 @@ import {
 } from "./car.validation";
 import { createBookingReturnValidationSchema } from "../booking/booking.validation";
 import { BookingControllers } from "../booking/booking.controller";
+import { uploader } from "../../utils/uploader";
 
 const router = express.Router();
 
@@ -35,7 +36,17 @@ router.delete("/:id", auth(USER_ROLE.admin), CarControllers.deleteCar);
 
 router.post(
   "/",
-  auth(USER_ROLE. admin),
+  // auth(USER_ROLE.admin),
+  uploader.array("images", 5),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = {
+      ...req.body,
+      isElectric: req.body.isElectric === 'true',
+      features: JSON.parse(req.body.features),
+      pricePerHour: Number(req.body.pricePerHour),
+    };
+    next();
+  },
   validateRequest(createCarValidationSchema),
   CarControllers.createCar,
 );

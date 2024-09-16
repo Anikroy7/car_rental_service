@@ -2,9 +2,24 @@ import httpStatus from "http-status";
 import sendResponse from "../../utils/sendResponse";
 import catchAsync from "../../utils/catchAsync";
 import { UserServices } from "./user.service";
+import { uploadImageToCloudinary } from "../../utils/uploadImageToCloudinary";
 
 const createUser = catchAsync(async (req, res) => {
   const userData = req.body;
+  const urls = [];
+  if (req.files) {
+    const files = Array.isArray(req.files)
+      ? req.files
+      : Object.values(req.files).flat();
+    for (const file of files) {
+      const newPath = (await uploadImageToCloudinary(
+        `${process.cwd()}/${file.path}`,
+        file.path
+      )) as any;
+      urls.push(newPath.secure_url);
+    }
+  }
+  userData.images = urls;
   const result = await UserServices.createUserIntoDB(userData);
   sendResponse(res, {
     statusCode: httpStatus.OK,

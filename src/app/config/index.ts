@@ -11,4 +11,7 @@ export default {
   jwt_access_secret: process.env.JWT_ACCESS_SECRET,
   jwt_access_expires_in: process.env.JWT_ACCESS_EXPIRES_IN,
   send_email_ui_link: process.env.SEND_EMAIL_UI_LINK,
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API__KEY,
+  api_secret: process.env.API_SECRET
 };
