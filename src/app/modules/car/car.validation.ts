@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+
 export const createCarValidationSchema = z.object({
   body: z.object({
     name: z.string(),
@@ -8,7 +9,8 @@ export const createCarValidationSchema = z.object({
     isElectric: z.boolean(),
     status: z.enum(["available", "unavailable"]).optional(),
     features: z.array(z.string()),
-    pricePerHour: z.number(),         
+    pricePerHour: z.number(),  
+    images: z.array(z.string()),
     isDeleted: z.boolean().optional(),
   }),
 });
@@ -21,6 +23,7 @@ export const updateCarValidationSchema = z.object({
     status: z.enum(["available", "unavailable"]).optional(),
     features: z.array(z.string()).optional(),
     pricePerHour: z.number().optional(),
+    images: z.array(z.string()).optional(),
     isDeleted: z.boolean().optional(),
   }),
 });

@@ -2,6 +2,7 @@
 import { Schema, model } from "mongoose";
 import { TCar } from "./car.interface";
 
+
 const carSchema = new Schema<TCar>(
   {
     name: {

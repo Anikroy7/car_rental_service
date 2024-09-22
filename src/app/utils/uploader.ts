@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
     done(null, "./uploads");
   },
   filename: (req, file, done) => {
-    console.log(file);
+    // console.log(file);
     const fileExtension = path.extname(file.originalname);
     const fileName =
       file.originalname

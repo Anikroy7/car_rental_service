@@ -10,7 +10,7 @@ import {
 } from "./car.validation";
 import { createBookingReturnValidationSchema } from "../booking/booking.validation";
 import { BookingControllers } from "../booking/booking.controller";
-import { uploader } from "../../utils/uploader";
+
 
 const router = express.Router();
 
@@ -22,12 +22,11 @@ router.put(
 );
 
 router.get(
-  "/:id",
-  /* auth(USER_ROLE.admin, USER_ROLE.user), */ CarControllers.getSingleCar,
+  "/:id", CarControllers.getSingleCar,
 );
 router.put(
   "/:id",
-  auth(USER_ROLE.admin),
+  // auth(USER_ROLE.admin), 
   validateRequest(updateCarValidationSchema),
   CarControllers.updateCar,
 );
@@ -36,17 +35,7 @@ router.delete("/:id", auth(USER_ROLE.admin), CarControllers.deleteCar);
 
 router.post(
   "/",
-  // auth(USER_ROLE.admin),
-  uploader.array("images", 5),
-  (req: Request, res: Response, next: NextFunction) => {
-    req.body = {
-      ...req.body,
-      isElectric: req.body.isElectric === 'true',
-      features: JSON.parse(req.body.features),
-      pricePerHour: Number(req.body.pricePerHour),
-    };
-    next();
-  },
+  auth(USER_ROLE.admin),
   validateRequest(createCarValidationSchema),
   CarControllers.createCar,
 );
