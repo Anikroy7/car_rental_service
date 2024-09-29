@@ -13,6 +13,14 @@ const carSchema = new Schema<TCar>(
       type: String,
       required: true,
     },
+    insurancePolicy: {
+      type: String,
+      required: true,
+    },
+    cancellationPolicy: {
+      type: String,
+      required: true,
+    },
     color: {
       type: String,
       required: true,

@@ -10,4 +10,6 @@ export type TCar = {
   images: string[]
   pricePerHour: number;
   isDeleted: boolean;
+  cancellationPolicy: string;
+  insurancePolicy: string;
 };
