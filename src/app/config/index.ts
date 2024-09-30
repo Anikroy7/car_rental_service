@@ -13,5 +13,10 @@ export default {
   send_email_ui_link: process.env.SEND_EMAIL_UI_LINK,
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API__KEY,
-  api_secret: process.env.API_SECRET
+  api_secret: process.env.API_SECRET,
+  payBaseUrl: process.env.AAMARPAY_BASE_URL,
+  storeId: process.env.AAMARPAY_STORE_ID,
+  signatureKey: process.env.AAMARPAY_SIGNATURE_KEY,
+  server_base_url: process.env.SERVER_BASE_URL,
+  client_base_url: process.env.CLIENT_BASE_URL
 };

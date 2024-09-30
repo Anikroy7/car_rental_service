@@ -21,7 +21,6 @@ const createBookingIntoDB = async (payload: TBooking) => {
   if (!newBooking) {
     throw new AppError(httpStatus.BAD_REQUEST, "Failed to create booking!");
   }
-
   return newBooking;
 };
 
@@ -45,6 +44,7 @@ const returnCarUpdateIntoDB = async (bookingId: string, endTime: string) => {
     {
       endTime,
       totalCost,
+      isReturned:true
     },
     { new: true },
   )
@@ -79,9 +79,28 @@ const getAllBookingsFromDB = async (params: QueryParams) => {
   return bookings;
 };
 
+const updateBookingIntoDB = async (_id: string, payload: TBooking) => {
+  const booking = await Booking.findById(_id);
+
+  if (!booking) {
+    throw new AppError(httpStatus.NOT_FOUND, "Can't find the booking");
+  }
+  const updatedData = {
+    ...booking.toObject(),
+    ...payload,
+  };
+  const updatedbooking = await Booking.findByIdAndUpdate(_id, updatedData, {
+    new: true,
+    runValidators: true,
+    select: "-createdAt -updatedAt -__v",
+  });
+  return updatedbooking;
+};
+
 export const BookingServices = {
   createBookingIntoDB,
   getMyBookingsFromDB,
   returnCarUpdateIntoDB,
   getAllBookingsFromDB,
+  updateBookingIntoDB
 };
